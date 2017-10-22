@@ -18,4 +18,12 @@ export class Game {
             bubble.radius = Bubble.default_radius * (1 + 0.25 * Math.sin(this.time * 3))
         }
     }
+
+    create_bubble(width:number, height:number){
+        const bubble = new Bubble()
+        bubble.x = Math.random() * width;
+        bubble.y = Math.random() * height;
+        this.bubbles.push(bubble)
+
+    }
 }

@@ -20,7 +20,42 @@ class Main {
             if (ev.key == " ") console.log("space")
         })
 
+        window.addEventListener("keypress", (ev) => {
+            if (ev.key == "c") return this.on_c_press();
+        })
+
+        window.addEventListener("keypress", (ev) => {
+            if (ev.key == "b") return this.on_b_press();
+        })
+
         setTimeout(() => this.game_loop(), 1000)
+    }
+
+    on_c_press(){
+        console.log("color_changed");
+        this.change_color();
+    }
+
+    on_b_press(){
+        console.log("bubble created");
+        this.add_bubble();
+    }
+
+    change_color(){
+        for (const bubble of this.game.bubbles) {
+            let r, b , g, a;
+
+            r = Math.floor(Math.random()*255);//random number between 0 /255
+            g = Math.floor(Math.random()*255);//random number between 0 /255
+            b = Math.floor(Math.random()*255);//random number between 0 /255
+            a = 0.5 + (Math.random()*0.5);//random number between 0 /1
+            bubble.color = "rgba("+ r + "," + g + "," + b + "," + a + ")";
+            console.log(bubble.color);
+        }
+    }
+
+    add_bubble(){
+        this.game.create_bubble( window.innerWidth, window.innerHeight);
     }
 
     on_window_resize() {

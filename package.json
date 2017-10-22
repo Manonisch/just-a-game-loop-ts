@@ -4,7 +4,10 @@
   "description": "",
   "author": "",
   "license": "Public Domain",
-  "dependencies": {},
+  "dependencies": {
+    "@types/matter-js": "^0.9.33",
+    "matter-js": "^0.13.0"
+  },
   "devDependencies": {
     "awesome-typescript-loader": "^3.2.3",
     "source-map-loader": "^0.2.2",

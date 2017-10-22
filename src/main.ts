@@ -1,4 +1,4 @@
-import { Game } from "./Game"
+import {Game} from "./Game"
 
 
 class Main {
@@ -14,7 +14,9 @@ class Main {
         this.render_title(ctx)
 
         window.addEventListener('resize', (ev) => this.on_window_resize())
-        window.addEventListener("click", (ev) => this.on_window_click());
+        window.addEventListener("click", (ev) => this.on_window_click(ev));
+
+        window.addEventListener("mousemove", (ev) => this.on_window_hover(ev));
 
         window.addEventListener("keypress", (ev) => {
             if (ev.key == " ") console.log("space")
@@ -31,31 +33,31 @@ class Main {
         setTimeout(() => this.game_loop(), 1000)
     }
 
-    on_c_press(){
+    on_c_press() {
         console.log("color_changed");
         this.change_color();
     }
 
-    on_b_press(){
+    on_b_press() {
         console.log("bubble created");
         this.add_bubble();
     }
 
-    change_color(){
+    change_color() {
         for (const bubble of this.game.bubbles) {
-            let r, b , g, a;
+            let r, b, g, a;
 
-            r = Math.floor(Math.random()*255);//random number between 0 /255
-            g = Math.floor(Math.random()*255);//random number between 0 /255
-            b = Math.floor(Math.random()*255);//random number between 0 /255
-            a = 0.5 + (Math.random()*0.5);//random number between 0 /1
-            bubble.color = "rgba("+ r + "," + g + "," + b + "," + a + ")";
+            r = Math.floor(Math.random() * 255);//random number between 0 /255
+            g = Math.floor(Math.random() * 255);//random number between 0 /255
+            b = Math.floor(Math.random() * 255);//random number between 0 /255
+            a = 0.5 + (Math.random() * 0.5);//random number between 0 /1
+            bubble.color = "rgba(" + r + "," + g + "," + b + "," + a + ")";
             console.log(bubble.color);
         }
     }
 
-    add_bubble(){
-        this.game.create_bubble( window.innerWidth, window.innerHeight);
+    add_bubble() {
+        this.game.create_bubble(window.innerWidth, window.innerHeight);
     }
 
     on_window_resize() {
@@ -63,13 +65,23 @@ class Main {
         this.resize_canvas()
     }
 
-    on_window_click() {
+    on_window_click(ev: MouseEvent) {
         this.requestFullScreen()
+        // this.move_bubbles(ev);
+    }
+
+    on_window_hover(ev: MouseEvent){
+        this.move_bubbles(ev);
     }
 
     resize_canvas() {
         this.canvas.width = window.innerWidth
         this.canvas.height = window.innerHeight
+    }
+
+    move_bubbles(ev: MouseEvent) {
+      //  this.game.mouse = {x: ev.x, y: ev.y};
+        this.game.move_to({x: ev.x, y: ev.y});
     }
 
     requestFullScreen() {
@@ -123,7 +135,6 @@ class Main {
         ctx.fillText(title, this.canvas.width / 2, this.canvas.height / 2)
     }
 }
-
 
 
 const main = new Main()
